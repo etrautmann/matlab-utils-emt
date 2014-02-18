@@ -51,9 +51,9 @@ end
 % fix defaults on all axes in figure
 axesList = findall(figure(figHandle),'type','axes');
 
-for kk = 1:length(axesList)
-    axes(axesList(kk))
-    set(gca, ...
+% for kk = 1:length(axesList)
+%     axes(axesList(kk))
+    set(axesList, ...
         'Box'         , 'off'     , ...
         'TickDir'     , 'out'     , ...
         'TickLength'  , [.015 .015] , ...
@@ -70,7 +70,7 @@ for kk = 1:length(axesList)
     %set(get(gca,'ZLabel'),'FontName', 'Arial',  'FontSize', 14);
     %set(get(gca,'title') ,'FontName', 'Arial',  'FontSize', 16,  'FontWeight', 'bold');
     
-end
+% end
 
 % set background color
 if bgColor == 'w'
