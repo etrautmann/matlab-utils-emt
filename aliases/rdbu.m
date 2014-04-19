@@ -1,6 +1,10 @@
-function cmap = rdbu()
+function cmap = rdbu(varargin)
 
-cmap = flipud(cbrewer('div','RdYlBu',50,'cubic'));
+if nargin < 1
+    nColor = 50;
+end
+
+cmap = flipud(cbrewer('div','RdYlBu',varargin{1},'cubic'));
 
 end
  
