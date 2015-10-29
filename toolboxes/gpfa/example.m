@@ -93,6 +93,9 @@ plotEachDimVsTime(seqTrain, 'xorth', result.binWidth);
 %   quantitatively using cross-validation in Section 2.
 % - Analogous to Figure 7 in Yu et al., J Neurophysiol, 2009.
 
+
+
+%%
 fprintf('\n');
 fprintf('Basic extraction and plotting of neural trajectories is complete.\n');
 fprintf('Press any key to start cross-validation...\n');

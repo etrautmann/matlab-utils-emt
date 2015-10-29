@@ -47,6 +47,8 @@ function plot3D(seq, xspec, varargin)
     end
     plot3(dat(1,:), dat(2,:), dat(3,:), '.-', 'linewidth', lw, 'color', col);
     hold on;
+    plot3(dat(1,1), dat(2,1), dat(3,1), 'go', 'markersize', 15)
+    plot3(dat(1,end), dat(2,end), dat(3,end), 'ro', 'markersize', 15)
   end
 
   axis equal;

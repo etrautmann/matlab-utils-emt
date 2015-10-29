@@ -16,7 +16,7 @@ function [] = exportPlot(figHandle, filePath, varargin)
 
 % set defaults
 defaultFormat = 'eps';
-defaultSize = [0 0 6 6];
+defaultSize = [0 0 6 5];
 defaultColor = 'w';
 defaultAxesShade = 0;
 
@@ -33,7 +33,7 @@ p.addParamValue('axesShade',defaultAxesShade);
 p.parse(figHandle,filePath,varargin{:});
 figHandle = p.Results.figHandle;
 filePath = p.Results.filePath;
-format = p.Results.format;
+ext = p.Results.format;
 size = p.Results.size;
 bgColor = p.Results.bgColor;
 axesShade = p.Results.axesShade;
@@ -41,9 +41,16 @@ axesShade = p.Results.axesShade;
 
 
 %look for specified folder and create if it doens't exist.
-[pathstr, name, ext] = fileparts(filePath);
-if exist(pathstr, 'dir') ~= 7
+[pathstr, fileName, ~] = fileparts(filePath);
+
+if isempty(pathstr)
+    pathstr = getenv('FIGROOT');
+elseif exist(pathstr, 'dir') ~= 7
     mkdir(pathstr);
+end
+
+if strcmp(ext, '')
+    ext = '.eps';
 end
 
 
@@ -63,7 +70,7 @@ axesList = findall(figure(figHandle),'type','axes');
         'YColor'      , axesShade*[1 1 1], ...
         'LineWidth'   , 1         );
     
-    set(gcf, 'InvertHardCopy', 'off');
+    set(figHandle, 'InvertHardCopy', 'off');
     set(gca, 'TickDir','out')
     %set(get(gca,'XLabel'),'FontName', 'Arial',  'FontSize', 14);
     %set(get(gca,'YLabel'),'FontName', 'Arial',  'FontSize', 14);
@@ -74,41 +81,53 @@ axesList = findall(figure(figHandle),'type','axes');
 
 % set background color
 if bgColor == 'w'
-    set(gcf,'Color','w')
+    set(figHandle,'Color','w')
 else
-    set(gcf,'Color','k')
+    set(figHandle,'Color','k')
 end
 
-orient portrait
+% orient portrait
 
 if numel(size) == 2
     size = [0 0 size];
 end
 
-set(gcf, 'PaperPosition', size);
-% set(gcf, 'PaperPositionMode', 'auto');
+set(figHandle, 'PaperPosition', size);
+set(figHandle, 'PaperPositionMode', 'auto');
+
+% winStyle = get(figHandle, 'WindowStyle');
+% if strcmp(winStyle, 'docked')
+%     set(figHandle,'WindowStyle','Normal');
+% end
 
 
 % suppress position warnings for docked figures:
 warning('off','MATLAB:Figure:SetPosition');
 warning('off','MATLAB:print:CustomResizeFcnInPrint');
 
+% add leading period if required for back compatibility
+if ~strcmp('.',ext(1))
+    ext = ['.' ext];
+end
+
 % export in desired format
-switch format
-    case 'eps'      % default case
-%         set(gcf, 'Renderer', 'opengl')
-        print(figHandle,'-depsc2',[filePath '_temp.eps']);
-        fixPSlinestyle([filePath '_temp.eps'],[filePath '.eps']) % call external function to make line weights heavier
-        eval(['!rm ' filePath '_temp.eps']);
+switch ext
+    case '.eps'      % default case
+%         set(figHandle, 'Renderer', 'opengl')
+%         print(figHandle,'-depsc2',[filePath]);
+%         fixPSlinestyle([filePath '_temp.eps'],[filePath '.eps']) % call external function to make line weights heavier
+%         eval(['!rm ' filePath '_temp.eps']);
+        fileOut = fullfile(pathstr, fileName);
+        epswrite(figHandle, fileOut)
+
+    case '.png'
+%         set(figHandle, 'PaperPosition', .5*size); %not sure why png requires rescaling
+        print(figHandle,'-dpng', '-r300',[filePath '.png']);
         
-    case 'png'
-%         set(gcf, 'PaperPosition', .5*size); %not sure why png requires rescaling
-        print(figHandle,'-dpng', '-r300',filePath);
+    case '.svg'
+        print(figHandle,'-dsvg','-r300', [filePath '.svg']);
         
-    case 'svg'
-        print(figHandle,'-dsvg','-r300', filePath);
-        
-    case 'pdf'
+    case '.pdf'
         print(figHandle,'-dpdf','-r300', [filePath '.pdf']);
         
 %     case 'epspng'
@@ -119,7 +138,14 @@ switch format
 %         [pathstr, name, ext] = fileparts(filePath);
 %         mkdir([pathstr '/png/']);
 %         print(figHandle,'-dpng', '-r300',[pathstr '/png/' name]);
-        
+end
+
+% if strcmp(winStyle, 'docked')
+%     set(figHandle,'WindowStyle','Docked');
+% end
+
+
+
 end
 
 

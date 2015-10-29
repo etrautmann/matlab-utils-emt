@@ -1,9 +1,13 @@
 % produces a blank figure with everything turned off
-% hf = blankFigure(axLim)
-% where axLim = [left right bottom top]
-function hf = blankFigure(axLim)
+%
+% Copyright Stanford University 2011
+
+function hf = blankFigure(varargin)
 
 hf = figure; hold on; 
 set(gca,'visible', 'off');
 set(hf, 'color', [1 1 1]);
-axis(axLim); axis square;
+if ~isempty(varargin)
+  axis(varargin{1});
+end
+axis square;

@@ -74,10 +74,10 @@ function result = neuralTraj(runIdx, dat, varargin)
     if cvf > 0
       fname = sprintf('%s_cv%02d', fname, cvf);
     end
-    if exist([fname '.mat'], 'file')
-      fprintf('%s already exists.  Skipping...\n', fname);
-      continue;
-    end
+%     if exist([fname '.mat'], 'file')
+%       fprintf('%s already exists.  Skipping...\n', fname);
+%       continue;
+%     end
     
     % Set cross-validation masks
     testMask = false(1, N);
