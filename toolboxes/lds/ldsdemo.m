@@ -24,13 +24,13 @@ clf;
 % generate some random data 
 
 T=100;
-X=randn(T,4);  % a sequence of 100 4-d vectors
+X=randn(T,10);  % a sequence of 100 4-d vectors
 
 plot(X);
-
+ 
 % Hit any key to continue 
 
-pause;
+% pause;
 
 fprintf('\n\n\n\n');
 

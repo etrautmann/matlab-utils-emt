@@ -118,7 +118,8 @@ switch ext
 %         fixPSlinestyle([filePath '_temp.eps'],[filePath '.eps']) % call external function to make line weights heavier
 %         eval(['!rm ' filePath '_temp.eps']);
         fileOut = fullfile(pathstr, fileName);
-        epswrite(figHandle, fileOut)
+%         epswrite(figHandle, fileOut)
+        print(figHandle,'-depsc2',fileOut);
 
     case '.png'
 %         set(figHandle, 'PaperPosition', .5*size); %not sure why png requires rescaling

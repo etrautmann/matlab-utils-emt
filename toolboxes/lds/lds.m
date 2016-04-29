@@ -113,7 +113,7 @@ for cycle=1:cyc
     likbase=lik;
   elseif (lik<oldlik) 
     fprintf(' violation');
-  elseif ((lik-likbase)<(1 + tol)*(oldlik-likbase)|~finite(lik)) 
+  elseif ((lik-likbase)<(1 + tol)*(oldlik-likbase)|~isfinite(lik)) 
     fprintf('\n');
     break;
   end;

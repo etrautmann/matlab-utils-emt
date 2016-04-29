@@ -69,7 +69,7 @@ for i=1:cyc;
     likbase=lik;
   elseif (lik<oldlik)     
     disp('violation');
-  elseif ((lik-likbase)<(1+tol)*(oldlik-likbase)|~finite(lik))  
+  elseif ((lik-likbase)<(1+tol)*(oldlik-likbase)|~isfinite(lik))  
     break;
   end;
 
