@@ -39,6 +39,8 @@ function [colormap]=cbrewer(ctype, cname, ncol, interp_method)
 % Date: 06.12.2011
 
 
+warning('off', 'MATLAB:interp1:UsePCHIP')
+
 % load colorbrewer data
 load('colorbrewer.mat')
 % initialise the colormap is there are any problems

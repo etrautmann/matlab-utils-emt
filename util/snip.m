@@ -7,8 +7,8 @@ function [] = funName(par1, par2, varargin)
 p = inputParser();
 p.addRequired('par1',@isstruct);
 p.addRequired('par2',@isnumeric);
-p.addParamValue('par3', @ischar);
-p.addParamValue('par4', @ischar);  
+p.addParameter('par3', @ischar);
+p.addParameter('par4', @ischar);  
 p.addOptional('par5',[]);
 p.addOptional('par6',[]);
 

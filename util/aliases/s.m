@@ -1,6 +1,6 @@
 function [so] = s(U)
 
-so = size(U)
+so = size(U);
 
 end
 
