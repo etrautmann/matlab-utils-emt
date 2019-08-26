@@ -32,7 +32,7 @@
 clear all
 
 N = 100;%100;   % number of neurons
-T = 20;%20;     % number of time points
+T = 30;%20;     % number of time points
 S = 7;%7;       % number of stimuli
 D = 2;          % number of decisions
 E = 20;%20;     % maximal number of trial repetitions
